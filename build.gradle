@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.activiti:activiti-spring-boot-starter:8.2.0-alpha.21'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

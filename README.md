@@ -22,6 +22,8 @@ $ ./gradlew bootRun
 ```
 
 起動すると `helloUser` プロセスが自動的に開始し、コンソールにタスク完了メッセージが表示されます。
+サンプルでは簡易的なユーザーとして `user/password` を登録しています。
+Activiti 8 は Spring Security を利用するため、必要に応じて `SecurityConfig` クラスでユーザーを追加・変更してください。
 
 
 ### 実行方法

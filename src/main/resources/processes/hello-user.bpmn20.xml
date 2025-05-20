@@ -3,12 +3,18 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:activiti="http://activiti.org/bpmn"
              targetNamespace="Examples">
+  <!-- Hello Userプロセスを定義するBPMNファイル -->
   <process id="helloUser" name="Hello User" isExecutable="true">
+    <!-- 開始イベント -->
     <startEvent id="start" />
+    <!-- ユーザー向け処理を行う最初のサービスタスク -->
     <serviceTask id="task1" name="Task 1" activiti:class="com.example.Task1Delegate" />
+    <!-- 続く処理を実行する二つ目のサービスタスク -->
     <serviceTask id="task2" name="Task 2" activiti:class="com.example.Task2Delegate" />
+    <!-- プロセスの終了イベント -->
     <endEvent id="end" />
 
+    <!-- 各タスクをつなぐシーケンスフロー -->
     <sequenceFlow id="flow1" sourceRef="start" targetRef="task1" />
     <sequenceFlow id="flow2" sourceRef="task1" targetRef="task2" />
     <sequenceFlow id="flow3" sourceRef="task2" targetRef="end" />

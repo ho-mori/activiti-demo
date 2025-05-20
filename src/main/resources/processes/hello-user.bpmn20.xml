@@ -5,8 +5,8 @@
              targetNamespace="Examples">
   <process id="helloUser" name="Hello User" isExecutable="true">
     <startEvent id="start" />
-    <userTask id="task1" name="Task 1" />
-    <userTask id="task2" name="Task 2" />
+    <serviceTask id="task1" name="Task 1" activiti:class="com.example.Task1Delegate" />
+    <serviceTask id="task2" name="Task 2" activiti:class="com.example.Task2Delegate" />
     <endEvent id="end" />
 
     <sequenceFlow id="flow1" sourceRef="start" targetRef="task1" />

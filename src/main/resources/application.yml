@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/activiti
+    username: activiti
+    password: activiti
+    driver-class-name: org.postgresql.Driver
+  # Uncomment to use PostgreSQL instead of in-memory database
+  # jpa:
+  #   database-platform: org.hibernate.dialect.PostgreSQLDialect
+

@@ -83,7 +83,7 @@ $ docker run --rm -p 8081:8080 alfresco/activiti-explorer:8.2.0-alpha.21
 $ docker compose up -d db
 ```
 
-`application.yml` の `datasource` セクションを有効にすると、プロセス・履歴データが永続化されます。
+`application.yml` では `datasource` セクションがコメントアウトされており、デフォルトではインメモリデータベースを利用します。PostgreSQL を使う場合はこのセクションを有効にしてください。
 
 ### 📜 ライセンス
 

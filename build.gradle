@@ -20,6 +20,7 @@ dependencies {
     implementation 'org.activiti:activiti-spring-boot-starter:8.2.0-alpha.21'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     runtimeOnly   'com.h2database:h2'
+    runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

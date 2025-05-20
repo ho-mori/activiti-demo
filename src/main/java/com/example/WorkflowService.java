@@ -22,8 +22,10 @@ public class WorkflowService {
      */
     public String runDirect() {
         authenticate();
+        System.out.println("Starting process: direct");
         runtimeService.startProcessInstanceByKey("helloUser");
         taskService.createTaskQuery().list().forEach(task -> {
+            System.out.println("Completing task: " + task.getName());
             taskService.complete(task.getId());
         });
         SecurityContextHolder.clearContext();
@@ -35,6 +37,7 @@ public class WorkflowService {
      */
     public String runWithHelperMethod() {
         authenticate();
+        System.out.println("Starting process: helper method");
         runtimeService.startProcessInstanceByKey("helloUser");
         completeTasks();
         SecurityContextHolder.clearContext();
@@ -42,7 +45,10 @@ public class WorkflowService {
     }
 
     private void completeTasks() {
-        taskService.createTaskQuery().list().forEach(task -> taskService.complete(task.getId()));
+        taskService.createTaskQuery().list().forEach(task -> {
+            System.out.println("Completing task: " + task.getName());
+            taskService.complete(task.getId());
+        });
     }
 
     /**
@@ -50,6 +56,7 @@ public class WorkflowService {
      */
     public String runWithTaskCompleter(TaskCompleter taskCompleter) {
         authenticate();
+        System.out.println("Starting process: separate class");
         runtimeService.startProcessInstanceByKey("helloUser");
         taskCompleter.completeTasks(taskService);
         SecurityContextHolder.clearContext();

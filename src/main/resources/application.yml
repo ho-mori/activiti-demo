@@ -7,3 +7,6 @@ spring:
   # Uncomment to use PostgreSQL instead of in-memory database
   # jpa:
   #   database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+workflow:
+  bpmn-path: src/main/resources/processes/hello-user.bpmn20.xml

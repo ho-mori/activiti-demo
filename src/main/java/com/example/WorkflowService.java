@@ -4,6 +4,7 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,16 +18,19 @@ public class WorkflowService {
     private final RuntimeService runtimeService;
     private final TaskService taskService;
     private final RepositoryService repositoryService;
+    private final String bpmnPath;
 
     /**
      * 各種 Activiti サービスを注入します。
      */
     public WorkflowService(RuntimeService runtimeService,
                            TaskService taskService,
-                           RepositoryService repositoryService) {
+                           RepositoryService repositoryService,
+                           @Value("${workflow.bpmn-path:src/main/resources/processes/hello-user.bpmn20.xml}") String bpmnPath) {
         this.runtimeService = runtimeService;
         this.taskService = taskService;
         this.repositoryService = repositoryService;
+        this.bpmnPath = bpmnPath;
     }
 
     /**
@@ -82,16 +86,21 @@ public class WorkflowService {
     public String runWithDynamicDeployment() {
         authenticate();
         System.out.println("Starting process: dynamic deployment");
-        Deployment deployment = repositoryService.createDeployment()
-                .addClasspathResource("processes/hello-user.bpmn20.xml")
-                .deploy();
+        try (java.io.InputStream in = new java.io.FileInputStream(bpmnPath)) {
+            Deployment deployment = repositoryService.createDeployment()
+                    .addInputStream("hello-user.bpmn20.xml", in)
+                    .deploy();
 
-        runtimeService.startProcessInstanceByKey("helloUser");
-        completeTasks();
+            runtimeService.startProcessInstanceByKey("helloUser");
+            completeTasks();
 
-        repositoryService.deleteDeployment(deployment.getId(), true);
-        SecurityContextHolder.clearContext();
-        return "Process completed: dynamic deployment";
+            repositoryService.deleteDeployment(deployment.getId(), true);
+            return "Process completed: dynamic deployment";
+        } catch (java.io.IOException e) {
+            throw new RuntimeException("Failed to load BPMN file: " + bpmnPath, e);
+        } finally {
+            SecurityContextHolder.clearContext();
+        }
     }
 
     /**

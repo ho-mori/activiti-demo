@@ -38,6 +38,13 @@ JAR を生成して実行する場合は次の通りです。
 java -jar build/libs/activiti-demo-0.0.1-SNAPSHOT.jar
 ```
 
+### 🔄 BPMN を動的にリロードする
+
+`/workflow/reload` エンドポイントでは `workflow.bpmn-path` プロパティで指定された
+外部 BPMN ファイルを読み込みます。デフォルト値は
+`src/main/resources/processes/hello-user.bpmn20.xml` です。ファイルを編集してから
+再度 `/workflow/reload` を呼び出すと変更が反映されます。
+
 ### 🗂️ ディレクトリ構成
 
 ```

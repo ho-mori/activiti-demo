@@ -23,6 +23,19 @@ $ ./gradlew bootRun
 
 起動すると `helloUser` プロセスが自動的に開始し、コンソールにタスク完了メッセージが表示されます。
 
+
+### 実行方法
+
+以下のコマンドでアプリを起動できます。
+```bash
+./gradlew bootRun
+```
+JAR を生成して実行する場合は次の通りです。
+```bash
+./gradlew bootJar
+java -jar build/libs/activiti-demo-0.0.1-SNAPSHOT.jar
+```
+
 ### 🗂️ ディレクトリ構成
 
 ```

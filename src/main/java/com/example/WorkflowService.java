@@ -9,12 +9,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+/**
+ * ワークフローの実行ロジックを提供するサービスクラスです。
+ */
 @Service
 public class WorkflowService {
     private final RuntimeService runtimeService;
     private final TaskService taskService;
     private final RepositoryService repositoryService;
 
+    /**
+     * 各種 Activiti サービスを注入します。
+     */
     public WorkflowService(RuntimeService runtimeService,
                            TaskService taskService,
                            RepositoryService repositoryService) {
@@ -24,7 +30,7 @@ public class WorkflowService {
     }
 
     /**
-     * Run workflow with all logic in this method.
+     * すべての処理を一つのメソッドで行います。
      */
     public String runDirect() {
         authenticate();
@@ -39,7 +45,7 @@ public class WorkflowService {
     }
 
     /**
-     * Run workflow and delegate task completion to a private method.
+     * タスク完了をプライベートメソッドに委譲します。
      */
     public String runWithHelperMethod() {
         authenticate();
@@ -50,6 +56,7 @@ public class WorkflowService {
         return "Process completed: helper method";
     }
 
+    /** タスクを順に完了させる内部メソッド */
     private void completeTasks() {
         taskService.createTaskQuery().list().forEach(task -> {
             System.out.println("Completing task: " + task.getName());
@@ -58,7 +65,7 @@ public class WorkflowService {
     }
 
     /**
-     * Run workflow and delegate task completion to a separate class.
+     * タスク完了処理を別クラスに委譲します。
      */
     public String runWithTaskCompleter(TaskCompleter taskCompleter) {
         authenticate();
@@ -70,7 +77,7 @@ public class WorkflowService {
     }
 
     /**
-     * Deploy workflow from XML each time and remove deployment after completion.
+     * 毎回 XML をデプロイし、実行後に削除します。
      */
     public String runWithDynamicDeployment() {
         authenticate();
@@ -87,6 +94,9 @@ public class WorkflowService {
         return "Process completed: dynamic deployment";
     }
 
+    /**
+     * 簡易的な認証情報を設定します。
+     */
     private void authenticate() {
         SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken(

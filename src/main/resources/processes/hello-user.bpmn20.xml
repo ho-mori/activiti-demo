@@ -5,9 +5,12 @@
              targetNamespace="Examples">
   <process id="helloUser" name="Hello User" isExecutable="true">
     <startEvent id="start" />
-    <userTask id="userTask" name="Say hello" />
+    <userTask id="task1" name="Task 1" />
+    <userTask id="task2" name="Task 2" />
     <endEvent id="end" />
-    <sequenceFlow id="flow1" sourceRef="start" targetRef="userTask" />
-    <sequenceFlow id="flow2" sourceRef="userTask" targetRef="end" />
+
+    <sequenceFlow id="flow1" sourceRef="start" targetRef="task1" />
+    <sequenceFlow id="flow2" sourceRef="task1" targetRef="task2" />
+    <sequenceFlow id="flow3" sourceRef="task2" targetRef="end" />
   </process>
 </definitions>

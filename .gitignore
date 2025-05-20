@@ -1,0 +1,33 @@
+# --- Gradle ---
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# --- Java / Kotlin ---
+*.class
+*.jar
+*.war
+*.ear
+
+# --- Logs ---
+*.log
+
+# --- IntelliJ ---
+.idea/
+*.iml
+out/
+
+# --- VS Code ---
+.vscode/
+
+# --- OS / Editor ---
+.DS_Store
+Thumbs.db
+
+# --- Docker ---
+**/.docker/
+*.env
+
+# --- Others ---
+# Local application properties you don’t want to commit
+application-*.yml

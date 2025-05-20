@@ -1,10 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/activiti
-    username: activiti
-    password: activiti
+    url: jdbc:postgresql://10.30.120.24:5432/scashworkflow
+    username: postgres
+    password: 123456
     driver-class-name: org.postgresql.Driver
   # Uncomment to use PostgreSQL instead of in-memory database
   # jpa:
   #   database-platform: org.hibernate.dialect.PostgreSQLDialect
-

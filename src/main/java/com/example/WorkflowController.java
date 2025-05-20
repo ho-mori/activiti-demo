@@ -27,4 +27,9 @@ public class WorkflowController {
     public String separateClass() {
         return workflowService.runWithTaskCompleter(taskCompleter);
     }
+
+    @GetMapping("/workflow/reload")
+    public String reload() {
+        return workflowService.runWithDynamicDeployment();
+    }
 }

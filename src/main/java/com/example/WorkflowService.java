@@ -2,6 +2,8 @@ package com.example;
 
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.Deployment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,10 +13,14 @@ import org.springframework.stereotype.Service;
 public class WorkflowService {
     private final RuntimeService runtimeService;
     private final TaskService taskService;
+    private final RepositoryService repositoryService;
 
-    public WorkflowService(RuntimeService runtimeService, TaskService taskService) {
+    public WorkflowService(RuntimeService runtimeService,
+                           TaskService taskService,
+                           RepositoryService repositoryService) {
         this.runtimeService = runtimeService;
         this.taskService = taskService;
+        this.repositoryService = repositoryService;
     }
 
     /**
@@ -61,6 +67,24 @@ public class WorkflowService {
         taskCompleter.completeTasks(taskService);
         SecurityContextHolder.clearContext();
         return "Process completed: separate class";
+    }
+
+    /**
+     * Deploy workflow from XML each time and remove deployment after completion.
+     */
+    public String runWithDynamicDeployment() {
+        authenticate();
+        System.out.println("Starting process: dynamic deployment");
+        Deployment deployment = repositoryService.createDeployment()
+                .addClasspathResource("processes/hello-user.bpmn20.xml")
+                .deploy();
+
+        runtimeService.startProcessInstanceByKey("helloUser");
+        completeTasks();
+
+        repositoryService.deleteDeployment(deployment.getId(), true);
+        SecurityContextHolder.clearContext();
+        return "Process completed: dynamic deployment";
     }
 
     private void authenticate() {

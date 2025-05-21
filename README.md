@@ -45,6 +45,11 @@ java -jar build/libs/activiti-demo-0.0.1-SNAPSHOT.jar
 `src/main/resources/processes/hello-user.bpmn20.xml` です。ファイルを編集してから
 再度 `/workflow/reload` を呼び出すと変更が反映されます。
 
+開発中に `./gradlew bootRun` を繰り返し実行するだけでは、変更した BPMN が
+ビルドに反映されないことがあります。その場合は `--rerun` オプションを付けるか
+`clean` タスクを実行してから再起動するか、上記の `/workflow/reload` を利用して
+ください。
+
 ### 🗂️ ディレクトリ構成
 
 ```

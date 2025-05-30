@@ -5,18 +5,31 @@
              targetNamespace="Examples">
   <!-- Hello Userプロセスを定義するBPMNファイル -->
   <process id="helloUser" name="Hello User" isExecutable="true">
-    <!-- 開始イベント -->
-    <startEvent id="start" />
-    <!-- ユーザー向け処理を行う最初のサービスタスク -->
-    <serviceTask id="task1" name="Task 1" activiti:class="com.example.Task1Delegate" />
-    <!-- 続く処理を実行する二つ目のサービスタスク -->
-    <serviceTask id="task2" name="Task 2" activiti:class="com.example.Task2Delegate" />
-    <!-- プロセスの終了イベント -->
-    <endEvent id="end" />
+    <!-- 開始イベントでクラスを呼び出す -->
+    <startEvent id="start">
+      <extensionElements>
+        <activiti:executionListener event="start" class="com.example.StartDelegate" />
+      </extensionElements>
+    </startEvent>
+    <!-- 5 つのタスクは 1 クラスの異なるメソッドを呼び出す -->
+    <serviceTask id="task1" name="Task 1" activiti:expression="${workflowTasks.task1(execution)}" />
+    <serviceTask id="task2" name="Task 2" activiti:expression="${workflowTasks.task2(execution)}" />
+    <serviceTask id="task3" name="Task 3" activiti:expression="${workflowTasks.task3(execution)}" />
+    <serviceTask id="task4" name="Task 4" activiti:expression="${workflowTasks.task4(execution)}" />
+    <serviceTask id="task5" name="Task 5" activiti:expression="${workflowTasks.task5(execution)}" />
+    <!-- プロセス終了時にクラスを呼び出す -->
+    <endEvent id="end">
+      <extensionElements>
+        <activiti:executionListener event="end" class="com.example.EndDelegate" />
+      </extensionElements>
+    </endEvent>
 
     <!-- 各タスクをつなぐシーケンスフロー -->
     <sequenceFlow id="flow1" sourceRef="start" targetRef="task1" />
     <sequenceFlow id="flow2" sourceRef="task1" targetRef="task2" />
-    <sequenceFlow id="flow3" sourceRef="task2" targetRef="end" />
+    <sequenceFlow id="flow3" sourceRef="task2" targetRef="task3" />
+    <sequenceFlow id="flow4" sourceRef="task3" targetRef="task4" />
+    <sequenceFlow id="flow5" sourceRef="task4" targetRef="task5" />
+    <sequenceFlow id="flow6" sourceRef="task5" targetRef="end" />
   </process>
 </definitions>

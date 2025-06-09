@@ -50,4 +50,12 @@ public class WorkflowController {
     public String reload() {
         return workflowService.runWithDynamicDeployment();
     }
+
+    /**
+     * pattern1 プロセスを実行するバージョン
+     */
+    @GetMapping("/workflow/pattern1")
+    public String pattern1() {
+        return workflowService.runPattern1();
+    }
 }

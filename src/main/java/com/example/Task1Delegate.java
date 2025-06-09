@@ -14,6 +14,9 @@ public class Task1Delegate implements JavaDelegate {
      * BPMN の serviceTask から呼び出されます。
      */
     public void execute(DelegateExecution execution) {
-        System.out.println("Executing Task 1 - Task1Delegate");
+        String input = (String) execution.getVariable("task1In");
+        String result = "Task1 processed " + input;
+        System.out.println(result);
+        execution.setVariable("task1Out", result);
     }
 }

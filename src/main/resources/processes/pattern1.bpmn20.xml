@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:activiti="http://activiti.org/bpmn"
+             targetNamespace="Examples">
+  <process id="pattern1" name="Pattern1" isExecutable="true">
+    <startEvent id="start">
+      <extensionElements>
+        <activiti:executionListener event="start" class="com.example.StartDelegate" />
+      </extensionElements>
+    </startEvent>
+    <serviceTask id="task1" name="Task 1" activiti:class="com.example.Task1Delegate">
+      <extensionElements>
+        <activiti:inputOutput>
+          <activiti:inputParameter name="task1In">${task1In}</activiti:inputParameter>
+          <activiti:outputParameter name="task1Out">${task1Out}</activiti:outputParameter>
+        </activiti:inputOutput>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="task2" name="Task 2" activiti:class="com.example.Task2Delegate">
+      <extensionElements>
+        <activiti:inputOutput>
+          <activiti:inputParameter name="task1Out">${task1Out}</activiti:inputParameter>
+          <activiti:outputParameter name="task2Out">${task2Out}</activiti:outputParameter>
+        </activiti:inputOutput>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="task3" name="Task 3" activiti:class="com.example.Task3Delegate">
+      <extensionElements>
+        <activiti:inputOutput>
+          <activiti:inputParameter name="task2Out">${task2Out}</activiti:inputParameter>
+          <activiti:outputParameter name="task3Out">${task3Out}</activiti:outputParameter>
+        </activiti:inputOutput>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="task4" name="Task 4" activiti:class="com.example.Task4Delegate">
+      <extensionElements>
+        <activiti:inputOutput>
+          <activiti:inputParameter name="task3Out">${task3Out}</activiti:inputParameter>
+          <activiti:outputParameter name="task4Out">${task4Out}</activiti:outputParameter>
+        </activiti:inputOutput>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="task5" name="Task 5" activiti:class="com.example.Task5Delegate">
+      <extensionElements>
+        <activiti:inputOutput>
+          <activiti:inputParameter name="task4Out">${task4Out}</activiti:inputParameter>
+          <activiti:outputParameter name="task5Out">${task5Out}</activiti:outputParameter>
+        </activiti:inputOutput>
+      </extensionElements>
+    </serviceTask>
+    <endEvent id="end">
+      <extensionElements>
+        <activiti:executionListener event="end" class="com.example.EndDelegate" />
+      </extensionElements>
+    </endEvent>
+    <sequenceFlow id="flow1" sourceRef="start" targetRef="task1" />
+    <sequenceFlow id="flow2" sourceRef="task1" targetRef="task2" />
+    <sequenceFlow id="flow3" sourceRef="task2" targetRef="task3" />
+    <sequenceFlow id="flow4" sourceRef="task3" targetRef="task4" />
+    <sequenceFlow id="flow5" sourceRef="task4" targetRef="task5" />
+    <sequenceFlow id="flow6" sourceRef="task5" targetRef="end" />
+  </process>
+</definitions>

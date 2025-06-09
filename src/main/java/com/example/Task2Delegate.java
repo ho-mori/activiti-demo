@@ -14,6 +14,9 @@ public class Task2Delegate implements JavaDelegate {
      * serviceTask から実行されるメソッドです。
      */
     public void execute(DelegateExecution execution) {
-        System.out.println("Executing Task 2 - Task2Delegate");
+        String input = (String) execution.getVariable("task1Out");
+        String result = "Task2 processed " + input;
+        System.out.println(result);
+        execution.setVariable("task2Out", result);
     }
 }

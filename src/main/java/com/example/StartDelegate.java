@@ -12,5 +12,7 @@ public class StartDelegate implements ExecutionListener {
     @Override
     public void notify(DelegateExecution execution) {
         System.out.println("Start event - StartDelegate");
+        // 初期入力値を設定
+        execution.setVariable("task1In", "startData");
     }
 }

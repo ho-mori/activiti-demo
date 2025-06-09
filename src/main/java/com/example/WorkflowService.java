@@ -104,6 +104,17 @@ public class WorkflowService {
     }
 
     /**
+     * pattern1 BPMN プロセスを実行します。
+     */
+    public String runPattern1() {
+        authenticate();
+        System.out.println("Starting process: pattern1");
+        runtimeService.startProcessInstanceByKey("pattern1");
+        SecurityContextHolder.clearContext();
+        return "Process completed: pattern1";
+    }
+
+    /**
      * 簡易的な認証情報を設定します。
      */
     private void authenticate() {
